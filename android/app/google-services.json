@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "410891321886",
+    "project_id": "zartek-dishes-app",
+    "storage_bucket": "zartek-dishes-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410891321886:android:72ca74f8d935ec75a5240f",
+        "android_client_info": {
+          "package_name": "com.zartek.zartek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410891321886-rimrdjqjjasm1gmomqlc971rk5j2akpe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjslF33CNBLeb_5RMe3BGmQv604gzUA7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410891321886-rimrdjqjjasm1gmomqlc971rk5j2akpe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

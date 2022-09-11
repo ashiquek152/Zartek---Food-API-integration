@@ -28,20 +28,14 @@ class HomeController extends GetxController {
   // void increment() => count.value++;
   static const String URL = "https://www.mocky.io/v2/5dfccffc310000efc8d2c1ad";
 
-  List<String> menuItemsNames = [];
   List<Widget> tabs = [];
   List<Widget> tabViews = [];
   List<DishesModel> dishesModelList = [];
-  int tabBarLength = 0;
-  List<CategoryDishes> categoryDishesList = [];
+  List<TableMenuList> tableMenuList = [];
 
   getDishesDetails() async {
     await getDishes();
-    final data1 =dishesModelList.first.tableMenuList; 
-    final data = dishesModelList.first.tableMenuList.first.categoryDishes!;
-    createTabs(data: data1);
-    createTabViews(data: data);
-    
+    // createTabs(data: data1);
     update();
   }
 
@@ -50,6 +44,19 @@ class HomeController extends GetxController {
       final response = await http.get(Uri.parse(URL));
       if (response.statusCode == 200) {
         dishesModelList = dishesModelFromJson(response.body);
+
+        for (var i = 0; i < dishesModelList.first.tableMenuList.length; i++) {
+          final data = dishesModelList.first.tableMenuList[i];
+          tableMenuList.add(data);
+        }
+        for (var element in tableMenuList) {
+          tabs.add(
+            Tab(text: element.menuCategory.toString()),
+          );
+          createTabViews(data: element.categoryDishes!);
+
+          log("TAB HEADING ${element.menuCategory.toString()}");
+        }
       }
     } catch (e) {
       log(e.toString());
@@ -57,23 +64,10 @@ class HomeController extends GetxController {
     return dishesModelList;
   }
 
-  void createTabs({required List<TableMenuList> data}) async {
-    tabs.clear();
-    for (var i = 0; i < data.length; i++) {
-      final dishModelAtindex = data[i];
-      tabs.add(Tab(
-        text: dishModelAtindex.menuCategory.toString(),
-      ));
-    }
-    log(tabs.length.toString());
-  }
-
   void createTabViews({required List<CategoryDishes> data}) {
     tabViews.clear();
-    for (var i = 0; i < data.length; i++) {
-      tabViews.add( DishDetailsTile(categoryDish: data,));
+    for (var element in tableMenuList) {
+      tabViews.add(DishDetailsTile(categoryDish: element.categoryDishes!));
     }
-    log(tabViews.length.toString());
   }
-
 }

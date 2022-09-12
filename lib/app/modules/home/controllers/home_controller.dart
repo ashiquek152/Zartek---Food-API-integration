@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,25 +8,12 @@ import 'package:http/http.dart' as http;
 import 'package:zartek/app/modules/home/views/views.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
-
   @override
   void onInit() {
     super.onInit();
     getDishesDetails();
   }
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
-
-  // void increment() => count.value++;
   static const String URL = "https://www.mocky.io/v2/5dfccffc310000efc8d2c1ad";
 
   List<Widget> tabs = [];
@@ -33,9 +21,12 @@ class HomeController extends GetxController {
   List<DishesModel> dishesModelList = [];
   List<TableMenuList> tableMenuList = [];
 
+  List<CategoryDishes> selectedItems = [];
+
+  int totalItemsSelected = 0;
+
   getDishesDetails() async {
     await getDishes();
-    // createTabs(data: data1);
     update();
   }
 
@@ -49,15 +40,14 @@ class HomeController extends GetxController {
           final data = dishesModelList.first.tableMenuList[i];
           tableMenuList.add(data);
         }
-        for (var element in tableMenuList) {
-          tabs.add(
-            Tab(text: element.menuCategory.toString()),
-          );
-          createTabViews(data: element.categoryDishes!);
 
-          log("TAB HEADING ${element.menuCategory.toString()}");
+        for (var element in tableMenuList) {
+          tabs.add(Tab(text: element.menuCategory.toString()));
+          createTabViews(data: element.categoryDishes!);
         }
       }
+    } on SocketException {
+      Get.snackbar("Network Error", "Plaease check internet connction");
     } catch (e) {
       log(e.toString());
     }
@@ -68,6 +58,32 @@ class HomeController extends GetxController {
     tabViews.clear();
     for (var element in tableMenuList) {
       tabViews.add(DishDetailsTile(categoryDish: element.categoryDishes!));
+    }
+  }
+
+  addDishesToList(CategoryDishes categoryDishes) {
+    if (selectedItems.contains(categoryDishes)) {
+      categoryDishes.quantity = (categoryDishes.quantity! + 1);
+    } else {
+      selectedItems.add(categoryDishes);
+      categoryDishes.quantity = 1;
+      totalItemsSelected = selectedItems.length;
+      log(totalItemsSelected.toString());
+    }
+    update();
+  }
+
+  removeDishesFromList(CategoryDishes categoryDishes) {
+    if (selectedItems.contains(categoryDishes)) {
+      if (categoryDishes.quantity! <=1) {
+        categoryDishes.quantity = 0;
+        selectedItems.remove(categoryDishes);
+        totalItemsSelected = selectedItems.length;
+        log(totalItemsSelected.toString());
+      } else {
+        categoryDishes.quantity = categoryDishes.quantity! - 1;
+      }
+      update();
     }
   }
 }

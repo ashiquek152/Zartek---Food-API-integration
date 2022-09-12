@@ -105,19 +105,22 @@ class CategoryDishes {
   int? dishType;
   String? nexturl;
   List<AddonCat>? addonCat;
+  int? quantity;
 
-  CategoryDishes(
-      {required this.dishId,
-      required this.dishName,
-      required this.dishPrice,
-      required this.dishImage,
-      required this.dishCurrency,
-      required this.dishCalories,
-      required this.dishDescription,
-      required this.dishAvailability,
-      required this.dishType,
-      required this.nexturl,
-      required this.addonCat});
+  CategoryDishes({
+    required this.dishId,
+    required this.dishName,
+    required this.dishPrice,
+    required this.dishImage,
+    required this.dishCurrency,
+    required this.dishCalories,
+    required this.dishDescription,
+    required this.dishAvailability,
+    required this.dishType,
+    required this.nexturl,
+    required this.addonCat,
+    this.quantity,
+  });
 
   CategoryDishes.fromJson(Map<String, dynamic> json) {
     dishId = json['dish_id'];

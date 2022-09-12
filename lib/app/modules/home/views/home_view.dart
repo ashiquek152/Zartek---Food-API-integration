@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -31,10 +30,19 @@ class HomeView extends GetView<HomeController> {
                     text: "DISHES",
                     fontWeight: FontWeight.bold,
                   ),
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 20, 10),
+                      child: Badge(
+                        badgeContent: TextCustomized(
+                          fontSize: 14,
+                          text: controller.totalItemsSelected.toString(),
+                        ),
+                        child: const Icon(Icons.shopping_cart_sharp),
+                      ),
+                    )
+                  ],
                   bottom: TabBar(
-                    onTap: (index){
-                      log(index.toString());
-                    },
                     isScrollable: true,
                     labelColor: Colors.pink,
                     unselectedLabelColor: Colors.black45,

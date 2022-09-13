@@ -75,7 +75,7 @@ class DetailsTileCustomContainer extends StatelessWidget {
                         children: [
                           IconButton(
                             onPressed: () =>
-                                controller.removeDishesFromList(data),
+                                homecontroller.removeDishesFromList(data),
                             icon: const TextCustomized(
                               fontSize: 25,
                               text: "-",
@@ -85,14 +85,14 @@ class DetailsTileCustomContainer extends StatelessWidget {
                           ),
                           TextCustomized(
                             fontSize: 16,
-                            text: data.quantity == null
+                            text: data.quantity == null||data.quantity==0
                                 ? "0"
                                 : data.quantity.toString(),
                             fontWeight: FontWeight.bold,
                             textColor: Colors.white,
                           ),
                           IconButton(
-                            onPressed: () => controller.addDishesToList(data),
+                            onPressed: () => homecontroller.addDishesToList(data),
                             icon: const Icon(
                               Icons.add,
                               color: Colors.white,

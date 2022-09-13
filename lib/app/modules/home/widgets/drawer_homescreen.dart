@@ -1,15 +1,17 @@
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:zartek/app/modules/home/controllers/home_controller.dart';
 import 'package:zartek/app/widgets/text_customized.dart';
 
 class DrawerHomescreen extends StatelessWidget {
-  const DrawerHomescreen({
+  DrawerHomescreen({
     Key? key,
-    required this.controller,
   }) : super(key: key);
 
-  final HomeController controller;
+  final controller = Get.put(HomeController());
+  final currentUser = FirebaseAuth.instance.currentUser;
+  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +19,28 @@ class DrawerHomescreen extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
+          DrawerHeader(
+            decoration: const BoxDecoration(
               color: Colors.green,
             ), //BoxDecoration
             child: UserAccountsDrawerHeader(
-              decoration: BoxDecoration(color: Colors.green),
-              accountName: TextCustomized(
-                fontSize: 18,
-                text: "User",
-                textColor: Colors.white,
-              ),
+              decoration: const BoxDecoration(color: Colors.green),
               accountEmail: TextCustomized(
-                  fontSize: 18, text: "Adh@gmail.com", textColor: Colors.white),
-              currentAccountPictureSize: Size.square(50),
-              currentAccountPicture: CircleAvatar(
+                  fontSize: 18,
+                  text: currentUser != null
+                      ? "UID : ${currentUser!.uid}"
+                      : "UID not available",
+                  textColor: Colors.white),
+              accountName: TextCustomized(
+                  fontSize: 18,
+                  text: currentUser != null
+                      ? currentUser!.email != null
+                          ? currentUser!.email.toString()
+                          : currentUser!.phoneNumber.toString()
+                      : "Not Available",
+                  textColor: Colors.white),
+              currentAccountPictureSize: const Size.square(50),
+              currentAccountPicture: const CircleAvatar(
                 backgroundColor: Color.fromARGB(255, 165, 255, 137),
                 child: Text(
                   "A",
@@ -43,10 +52,7 @@ class DrawerHomescreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.logout),
             title: const TextCustomized(fontSize: 22, text: "Logout"),
-            onTap: () {
-              // Navigator.pop(context);
-              controller.getDishes();
-            },
+            onTap: () => auth.signOut(),
           ),
         ],
       ),

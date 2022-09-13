@@ -6,11 +6,9 @@ import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
 
-void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
- 
+void main() async {
+   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // homeController.getDishesDetails();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -18,7 +16,7 @@ void main() async{
 
   runApp(
     GetMaterialApp(
-      title: "Application",
+      title: "Zartek",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
     ),

@@ -15,6 +15,8 @@ dependencies:
   firebase_core: ^1.22.0
   http: ^0.13.5
   badges: ^2.0.3
+  get_storage: ^2.0.3
+  google_sign_in: ^5.4.1
 
 dev_dependencies: 
   flutter_lints: 2.0.1
@@ -27,3 +29,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/IndianDishes.jpg
+    - assets/images/Google.png
+    - assets/images/firebase.png
